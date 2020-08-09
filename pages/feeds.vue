@@ -9,7 +9,7 @@
         <b-form-input id="feedUrl" v-model="feed.url" type="text" required />
       </b-form-group>
       <b-form-group label="Action" label-for="feedAction">
-        <b-form-select id="feedAction" v-model="feed.action" :options="[ { value: 'email', text: 'Email' }, { value: 'webhook', text: 'Webhook' }]" required />
+        <b-form-select id="feedAction" v-model="feed.action" :options="[{ value: 'email', text: 'Email' }, { value: 'webhook', text: 'Webhook' }]" required />
       </b-form-group>
       <b-form-group label="Webhook" label-for="feedWebhook">
         <b-form-textarea id="feedWebhook" v-model="feed.webhook" :disabled="feed.action === 'email'" rows="3" max-rows="10" />
