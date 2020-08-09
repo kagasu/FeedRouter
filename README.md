@@ -4,7 +4,7 @@
 
 ![](https://user-images.githubusercontent.com/1202244/89741574-5b1d0200-dacd-11ea-822a-821c1c95aa70.png)
 
-# How to initialize
+# Initialize
 ```
 git clone https://github.com/kagasu/FeedRouter
 cd FeedRouter
@@ -15,7 +15,16 @@ vim config/emailConfig.json
 sequelize db:create
 ```
 
-# How to development
+# Development
 ```
 npm run dev
+```
+
+# Production
+```
+npm run build
+
+pm2 start
+pm2 startup
+pm2 save
 ```
