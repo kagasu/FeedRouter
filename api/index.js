@@ -21,18 +21,16 @@ cron.schedule('* * * * *', async () => {
       if (Date.parse(item.isoDate) > feed.updatedAt) {
         switch (feed.action) {
           case 'email': {
-            const result = await transporter.sendMail({
+            await transporter.sendMail({
               from: emailConfig.auth.user,
               to: emailConfig.auth.user,
               subject: `${feed.title} ${item.title}`,
               text: item.link
             })
-            console.log(result)
             break
           }
           case 'webhook': {
             const webhook = JSON.parse(feed.webhook)
-            console.log(webhook.content.replace('{{FeedTitle}}', feed.title).replace('{{EntryUrl}}', item.link))
             await fetch(webhook.url, {
               method: webhook.method,
               headers: { ...webhook.headers },
