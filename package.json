@@ -1,0 +1,33 @@
+{
+  "name": "feed_router",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "feed-parser": "^1.0.19",
+    "mysql2": "^2.1.0",
+    "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "^6.4.11",
+    "nuxt": "^2.13.0",
+    "rss-parser": "^3.9.0",
+    "sequelize": "^6.3.3"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-plugin-nuxt": "^1.0.0"
+  }
+}
