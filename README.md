@@ -29,3 +29,9 @@ pm2 start
 pm2 startup
 pm2 save
 ```
+
+# FAQ
+### Q. I can't login to Gmail.
+A. Access below URLs.
+- https://myaccount.google.com/lesssecureapps
+- https://accounts.google.com/DisplayUnlockCaptcha
