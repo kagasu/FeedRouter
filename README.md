@@ -13,6 +13,7 @@ vim config/config.json
 vim config/emailConfig.json
 
 sequelize db:create
+sequelize db:migrate
 ```
 
 # Development
