@@ -8,6 +8,9 @@
       <b-form-group label="Feed URL" label-for="feedUrl">
         <b-form-input id="feedUrl" v-model="feed.url" type="text" required />
       </b-form-group>
+      <b-form-group label="NG Word" label-for="feedNGWord">
+        <b-form-input id="feedNGWord" v-model="feed.ngWord" type="text" />
+      </b-form-group>
       <b-form-group label="Action" label-for="feedAction">
         <b-form-select id="feedAction" v-model="feed.action" :options="[{ value: 'email', text: 'Email' }, { value: 'webhook', text: 'Webhook' }]" required />
       </b-form-group>
@@ -35,6 +38,7 @@ export default {
         id: 0,
         title: null,
         url: null,
+        ngWord: null,
         action: 'email',
         webhook: null
       },
@@ -59,12 +63,14 @@ export default {
         this.feed.id = x.id
         this.feed.title = x.title
         this.feed.url = x.url
+        this.feed.ngWord = x.ngWord
         this.feed.action = x.action
         this.feed.webhook = x.webhook
       } else {
         this.feed.id = 0
         this.feed.title = null
         this.feed.url = null
+        this.feed.ngWord = null
         this.feed.action = 'email'
         this.feed.webhook = '{\n  "url": "http://127.0.0.1/webhook",\n  "method": "post",\n  "headers": {\n    "Content-Type": "application/json"\n  },\n  "content": "{\\"content\\":\\"{{FeedTitle}}\\\\n{{EntryUrl}}\\"}"\n}'
       }

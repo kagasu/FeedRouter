@@ -28,10 +28,9 @@ export const actions = {
       body: JSON.stringify({
         title: x.title,
         url: x.url,
+        ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
-        webhook: (x.action === 'email')
-          ? null
-          : x.webhook
+        webhook: (x.action === 'email') ? null : x.webhook
       })
     })
 
@@ -45,10 +44,9 @@ export const actions = {
         id: x.id,
         title: x.title,
         url: x.url,
+        ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
-        webhook: (x.action === 'email')
-          ? null
-          : x.webhook
+        webhook: (x.action === 'email') ? null : x.webhook
       })
     })
 

@@ -12,6 +12,16 @@ const transporter = nodemailer.createTransport(emailConfig)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+function hasNgWord (title, content, ngWords) {
+  for (const ngWord of ngWords) {
+    if (title.includes(ngWord) || content.includes(ngWord)) {
+      return true
+    }
+  }
+
+  return false
+}
+
 cron.schedule('* * * * *', async () => {
   // 一分ごとにフィードをチェックする
   const parser = new Parser()
@@ -19,6 +29,10 @@ cron.schedule('* * * * *', async () => {
   for (const feed of feeds) {
     for (const item of (await parser.parseURL(feed.url)).items.reverse()) {
       if (Date.parse(item.isoDate) > feed.updatedAt) {
+        if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
+          continue
+        }
+
         switch (feed.action) {
           case 'email': {
             await transporter.sendMail({
@@ -69,6 +83,7 @@ app.post('/api/feed', async (req, res, next) => {
     await db.Feed.create({
       title: req.body.title,
       url: req.body.url,
+      ngWord: req.body.ng_word,
       action: req.body.action,
       webhook: req.body.webhook
     })
@@ -85,6 +100,7 @@ app.put('/api/feed', async (req, res, next) => {
     await db.Feed.update({
       title: req.body.title,
       url: req.body.url,
+      ngWord: req.body.ng_word,
       action: req.body.action,
       webhook: req.body.webhook
     }, {
