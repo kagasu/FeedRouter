@@ -35,3 +35,4 @@ pm2 save
 A. Access below URLs.
 - https://myaccount.google.com/lesssecureapps
 - https://accounts.google.com/DisplayUnlockCaptcha
+- https://nodemailer.com/usage/using-gmail/
