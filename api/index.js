@@ -5,6 +5,7 @@ const express = require('express')
 const fetch = require('node-fetch')
 const app = express()
 const nodemailer = require('nodemailer')
+const CryptoJS = require('crypto-js')
 const db = require('../models/')
 const emailConfig = require(`${__dirname}/../config/emailConfig.json`)[env]
 const transporter = nodemailer.createTransport(emailConfig)
@@ -24,12 +25,31 @@ function hasNgWord (title, content, ngWords) {
 
 cron.schedule('* * * * *', async () => {
   // 一分ごとにフィードをチェックする
-  const parser = new Parser()
+  const parser = new Parser({
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
+      'Accept': 'application/rss+xml, application/xml, text/xml'
+    }
+  })
+
   const feeds = await db.Feed.findAll()
   for (const feed of feeds) {
     for (const item of (await parser.parseURL(feed.url)).items.reverse()) {
       if (Date.parse(item.isoDate) > feed.updatedAt) {
         if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
+          continue
+        }
+
+        const urlHash = CryptoJS.SHA512(item.link).toString()
+
+        // 存在チェック
+        const actionLog = await db.ActionLog.findOne({
+          where: {
+            feedId: feed.id,
+            urlHash
+          }
+        })
+        if (actionLog) {
           continue
         }
 
@@ -54,6 +74,11 @@ cron.schedule('* * * * *', async () => {
           }
         }
         feed.changed('updatedAt', true)
+
+        await db.ActionLog.create({
+          feedId: feed.id,
+          urlHash
+        })
       }
     }
     await feed.save()

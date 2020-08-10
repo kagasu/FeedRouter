@@ -15,6 +15,7 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    'quote-props': 'off',
     'arrow-parens': 'off',
     'no-console': 'off',
     'vue/singleline-html-element-content-newline': 'off'
