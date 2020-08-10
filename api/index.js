@@ -39,10 +39,9 @@ cron.schedule('* * * * *', async () => {
             break
           }
         }
+        feed.changed('updatedAt', true)
       }
     }
-
-    feed.changed('updatedAt', true)
     await feed.save()
   }
 })
