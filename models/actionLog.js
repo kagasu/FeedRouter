@@ -19,8 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     urlHash: {
       field: 'url_hash',
-      type: DataTypes.STRING,
-      primaryKey: true
+      type: DataTypes.STRING
+    },
+    title: {
+      field: 'title',
+      type: DataTypes.STRING
+    },
+    url: {
+      field: 'url',
+      type: DataTypes.STRING
     },
     createdAt: {
       field: 'created_at',

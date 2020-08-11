@@ -77,7 +77,9 @@ cron.schedule('* * * * *', async () => {
 
         await db.ActionLog.create({
           feedId: feed.id,
-          urlHash
+          urlHash,
+          title: item.title.substring(0, 32),
+          url: item.link
         })
       }
     }

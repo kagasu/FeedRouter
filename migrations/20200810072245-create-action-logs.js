@@ -19,6 +19,16 @@ module.exports = {
         type: Sequelize.STRING(128),
         allowNull: false
       },
+      title: {
+        field: 'title',
+        type: Sequelize.STRING(32),
+        allowNull: false
+      },
+      url: {
+        field: 'url',
+        type: Sequelize.STRING(1024),
+        allowNull: false
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE,
