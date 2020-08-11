@@ -23,6 +23,13 @@ function hasNgWord (title, content, ngWords) {
   return false
 }
 
+function getReplacedText (feed, item, str) {
+  return str
+    .replace('{{FeedTitle}}', feed.title)
+    .replace('{{EntryTitle}}', item.title)
+    .replace('{{EntryUrl}}', item.link)
+}
+
 cron.schedule('* * * * *', async () => {
   // 一分ごとにフィードをチェックする
   const parser = new Parser({
@@ -52,8 +59,8 @@ cron.schedule('* * * * *', async () => {
             await transporter.sendMail({
               from: emailConfig.auth.user,
               to: emailConfig.auth.user,
-              subject: `${feed.title} ${item.title}`,
-              text: item.link
+              subject: (!feed.emailSubject) ? null : getReplacedText(feed, item, feed.emailSubject),
+              text: (!feed.emailBody) ? null : getReplacedText(feed, item, feed.emailBody)
             })
             break
           }
@@ -62,7 +69,7 @@ cron.schedule('* * * * *', async () => {
             await fetch(webhook.url, {
               method: webhook.method,
               headers: { ...webhook.headers },
-              body: webhook.content.replace('{{FeedTitle}}', feed.title).replace('{{EntryUrl}}', item.link)
+              body: getReplacedText(feed, item, webhook.content)
             })
             break
           }
@@ -106,6 +113,8 @@ app.post('/api/feed', async (req, res, next) => {
       url: req.body.url,
       ngWord: req.body.ng_word,
       action: req.body.action,
+      emailSubject: req.body.email_subject,
+      emailBody: req.body.email_body,
       webhook: req.body.webhook
     })
   } catch (e) {
@@ -123,6 +132,8 @@ app.put('/api/feed', async (req, res, next) => {
       url: req.body.url,
       ngWord: req.body.ng_word,
       action: req.body.action,
+      emailSubject: req.body.email_subject,
+      emailBody: req.body.email_body,
       webhook: req.body.webhook
     }, {
       where: {

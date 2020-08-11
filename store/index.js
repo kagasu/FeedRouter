@@ -30,6 +30,8 @@ export const actions = {
         url: x.url,
         ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
+        email_subject: (!x.emailSubject) ? null : x.emailSubject,
+        email_body: (!x.emailBody) ? null : x.emailBody,
         webhook: (x.action === 'email') ? null : x.webhook
       })
     })
@@ -45,6 +47,8 @@ export const actions = {
         title: x.title,
         url: x.url,
         ng_word: (!x.ngWord) ? null : x.ngWord,
+        email_subject: (!x.emailSubject) ? null : x.emailSubject,
+        email_body: (!x.emailBody) ? null : x.emailBody,
         action: x.action,
         webhook: (x.action === 'email') ? null : x.webhook
       })

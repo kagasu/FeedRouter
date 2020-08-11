@@ -29,6 +29,16 @@ module.exports = {
         type: Sequelize.STRING(32),
         allowNull: false
       },
+      emailSubject: {
+        field: 'email_subject',
+        type: Sequelize.STRING(128),
+        allowNull: true
+      },
+      emailBody: {
+        field: 'email_body',
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       webhook: {
         field: 'webhook',
         type: Sequelize.TEXT,

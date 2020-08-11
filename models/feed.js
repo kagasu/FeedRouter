@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       field: 'action',
       type: DataTypes.STRING
     },
+    emailSubject: {
+      field: 'email_subject',
+      type: DataTypes.STRING
+    },
+    emailBody: {
+      field: 'email_body',
+      type: DataTypes.STRING
+    },
     webhook: {
       field: 'webhook',
       type: DataTypes.STRING

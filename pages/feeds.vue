@@ -14,9 +14,19 @@
       <b-form-group label="Action" label-for="feedAction">
         <b-form-select id="feedAction" v-model="feed.action" :options="[{ value: 'email', text: 'Email' }, { value: 'webhook', text: 'Webhook' }]" required />
       </b-form-group>
-      <b-form-group label="Webhook" label-for="feedWebhook">
-        <b-form-textarea id="feedWebhook" v-model="feed.webhook" :disabled="feed.action === 'email'" rows="3" max-rows="10" />
-      </b-form-group>
+      <div v-if="feed.action === 'email'">
+        <b-form-group label="Email Subject" label-for="feedEmailSubject">
+          <b-form-input id="feedEmailSubject" v-model="feed.emailSubject" />
+        </b-form-group>
+        <b-form-group label="Email Body" label-for="feedEmailBody">
+          <b-form-textarea id="feedEmailBody" v-model="feed.emailBody" rows="3" max-rows="10" />
+        </b-form-group>
+      </div>
+      <div v-else>
+        <b-form-group label="Webhook" label-for="feedWebhook">
+          <b-form-textarea id="feedWebhook" v-model="feed.webhook" rows="3" max-rows="10" />
+        </b-form-group>
+      </div>
     </b-modal>
 
     <b-table striped hover :items="feeds" :fields="fields">
@@ -39,11 +49,13 @@ export default {
         title: null,
         url: null,
         ngWord: null,
-        action: 'email',
+        action: null,
+        emailSubject: null,
+        emailBody: null,
         webhook: null
       },
       fields: [
-        { key: 'id', sortable: true },
+        { key: 'id', sortable: true, sortDirection: 'desc' },
         { key: 'title', sortable: true },
         { key: 'action', sortable: true },
         { key: 'actions' }
@@ -65,6 +77,8 @@ export default {
         this.feed.url = x.url
         this.feed.ngWord = x.ngWord
         this.feed.action = x.action
+        this.feed.emailSubject = x.emailSubject
+        this.feed.emailBody = x.emailBody
         this.feed.webhook = x.webhook
       } else {
         this.feed.id = 0
@@ -72,6 +86,8 @@ export default {
         this.feed.url = null
         this.feed.ngWord = null
         this.feed.action = 'email'
+        this.feed.emailSubject = '{{FeedTitle}} {{EntryTitle}}'
+        this.feed.emailBody = '{{EntryUrl}}'
         this.feed.webhook = '{\n  "url": "http://127.0.0.1/webhook",\n  "method": "post",\n  "headers": {\n    "Content-Type": "application/json"\n  },\n  "content": "{\\"content\\":\\"{{FeedTitle}}\\\\n{{EntryUrl}}\\"}"\n}'
       }
     },
