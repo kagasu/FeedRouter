@@ -43,13 +43,7 @@ cron.schedule('* * * * *', async () => {
         const urlHash = CryptoJS.SHA512(item.link).toString()
 
         // 存在チェック
-        const actionLog = await db.ActionLog.findOne({
-          where: {
-            feedId: feed.id,
-            urlHash
-          }
-        })
-        if (actionLog) {
+        if (await db.ActionLog.findOne({ where: { feedId: feed.id, urlHash } })) {
           continue
         }
 
