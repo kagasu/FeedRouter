@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 
 function hasNgWord (title, content, ngWords) {
   for (const ngWord of ngWords) {
-    if (title.includes(ngWord) || content.includes(ngWord)) {
+    if ((title && title.includes(ngWord)) || (content && content.includes(ngWord))) {
       return true
     }
   }
