@@ -1,9 +1,10 @@
 # FeedRouter
+![](https://github.com/kagasu/FeedRouter/raw/master/resources/image001.png)
+
+# Features
 - Check feed every 1 minutes.
 - You can write custom feed in Node.js
 - Notify new entry(Email or Webhook)
-
-![](https://github.com/kagasu/FeedRouter/raw/master/resources/image001.png)
 
 # Initialize
 ```
