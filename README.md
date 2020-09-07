@@ -2,7 +2,7 @@
 - Check feed every 1 minutes.
 - Notify new entry(Email or Webhook)
 
-![](https://user-images.githubusercontent.com/1202244/89741574-5b1d0200-dacd-11ea-822a-821c1c95aa70.png)
+![](https://github.com/kagasu/FeedRouter/raw/master/resources/image001.png)
 
 # Initialize
 ```
