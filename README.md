@@ -3,8 +3,9 @@
 
 # Features
 - Check feed every 1 minutes.
-- You can write custom feed in Node.js
 - Notify new entry(Email or Webhook)
+- You can write custom feed in Node.js  
+https://github.com/kagasu/FeedRouter/tree/master/examples/script
 
 # Initialize
 ```
