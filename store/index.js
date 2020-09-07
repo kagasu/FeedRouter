@@ -27,12 +27,14 @@ export const actions = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: x.title,
-        url: x.url,
+        type: x.type,
+        url: (x.type === 'url') ? x.url : null,
+        script: (x.type === 'script') ? x.script : null,
         ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
-        email_subject: (!x.emailSubject) ? null : x.emailSubject,
-        email_body: (!x.emailBody) ? null : x.emailBody,
-        webhook: (x.action === 'email') ? null : x.webhook
+        email_subject: (!x.action === 'email') ? x.emailSubject : null,
+        email_body: (!x.action === 'email') ? x.emailBody : null,
+        webhook: (x.action === 'webhook') ? x.webhook : null
       })
     })
 
@@ -45,12 +47,14 @@ export const actions = {
       body: JSON.stringify({
         id: x.id,
         title: x.title,
-        url: x.url,
+        type: x.type,
+        url: (x.type === 'url') ? x.url : null,
+        script: (x.type === 'script') ? x.script : null,
         ng_word: (!x.ngWord) ? null : x.ngWord,
-        email_subject: (!x.emailSubject) ? null : x.emailSubject,
-        email_body: (!x.emailBody) ? null : x.emailBody,
         action: x.action,
-        webhook: (x.action === 'email') ? null : x.webhook
+        email_subject: (!x.action === 'email') ? x.emailSubject : null,
+        email_body: (!x.action === 'email') ? x.emailBody : null,
+        webhook: (x.action === 'webhook') ? x.webhook : null
       })
     })
 

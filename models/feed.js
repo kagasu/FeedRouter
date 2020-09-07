@@ -17,9 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       field: 'title',
       type: DataTypes.STRING
     },
+    type: {
+      field: 'type',
+      type: DataTypes.TEXT
+    },
     url: {
       field: 'url',
       type: DataTypes.STRING
+    },
+    script: {
+      field: 'script',
+      type: DataTypes.TEXT
     },
     ngWord: {
       field: 'ng_word',

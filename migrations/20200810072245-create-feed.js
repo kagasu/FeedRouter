@@ -14,10 +14,20 @@ module.exports = {
         type: Sequelize.STRING(64),
         allowNull: false
       },
+      type: {
+        field: 'type',
+        type: Sequelize.STRING(16),
+        allowNull: false
+      },
       url: {
         field: 'url',
         type: Sequelize.STRING(1024),
-        allowNull: false
+        allowNull: true
+      },
+      script: {
+        field: 'script',
+        type: Sequelize.TEXT('long'),
+        allowNull: true
       },
       ngWord: {
         field: 'ng_word',

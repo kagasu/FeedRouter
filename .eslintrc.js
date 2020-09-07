@@ -18,6 +18,7 @@ module.exports = {
     'quote-props': 'off',
     'arrow-parens': 'off',
     'no-console': 'off',
+    'no-eval': 'off',
     'vue/singleline-html-element-content-newline': 'off'
   }
 }

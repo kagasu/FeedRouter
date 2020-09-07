@@ -15,14 +15,21 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "crypto-js": "^4.0.0",
+    "date-fns-timezone": "^0.1.4",
     "feed-parser": "^1.0.19",
+    "linq": "^3.2.3",
     "mysql2": "^2.1.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.11",
     "nuxt": "^2.13.0",
+    "parse5": "^6.0.1",
+    "request": "^2.88.2",
     "rss-parser": "^3.9.0",
-    "sequelize": "^6.3.3"
+    "sequelize": "^6.3.3",
+    "xmldom": "^0.3.0",
+    "xmlserializer": "^0.6.1",
+    "xpath": "0.0.29"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.0.0",

@@ -41,7 +41,17 @@ cron.schedule('* * * * *', async () => {
 
   const feeds = await db.Feed.findAll()
   for (const feed of feeds) {
-    for (const item of (await parser.parseURL(feed.url)).items.reverse()) {
+    let items = []
+    switch (feed.type) {
+      case 'script':
+        items = await eval(feed.script)
+        break
+      case 'url':
+        items = (await parser.parseURL(feed.url)).items.reverse()
+        break
+    }
+
+    for (const item of items) {
       if (Date.parse(item.isoDate) > feed.updatedAt) {
         if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
           continue
@@ -110,7 +120,9 @@ app.post('/api/feed', async (req, res, next) => {
   try {
     await db.Feed.create({
       title: req.body.title,
+      type: req.body.type,
       url: req.body.url,
+      script: req.body.script,
       ngWord: req.body.ng_word,
       action: req.body.action,
       emailSubject: req.body.email_subject,
@@ -129,7 +141,9 @@ app.put('/api/feed', async (req, res, next) => {
   try {
     await db.Feed.update({
       title: req.body.title,
+      type: req.body.type,
       url: req.body.url,
+      script: req.body.script,
       ngWord: req.body.ng_word,
       action: req.body.action,
       emailSubject: req.body.email_subject,

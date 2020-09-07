@@ -5,9 +5,20 @@
       <b-form-group label="Title" label-for="feedTitle">
         <b-form-input id="feedTitle" v-model="feed.title" type="text" required />
       </b-form-group>
-      <b-form-group label="Feed URL" label-for="feedUrl">
-        <b-form-input id="feedUrl" v-model="feed.url" type="text" required />
+      <b-form-group label="Type" label-for="feedType">
+        <b-form-select id="feedType" v-model="feed.type" :options="[{ value: 'url', text: 'URL' }, { value: 'script', text: 'Script' }]" required />
       </b-form-group>
+      <div v-if="feed.type === 'url'">
+        <b-form-group label="URL" label-for="feedUrl">
+          <b-form-input id="feedUrl" v-model="feed.url" type="text" required />
+        </b-form-group>
+      </div>
+      <div v-else>
+        <b-form-group label="Script" label-for="feedScript">
+          <b-form-textarea id="feedScript" v-model="feed.script" rows="3" max-rows="10" />
+        </b-form-group>
+      </div>
+
       <b-form-group label="NG Word" label-for="feedNGWord">
         <b-form-input id="feedNGWord" v-model="feed.ngWord" type="text" />
       </b-form-group>
@@ -47,7 +58,9 @@ export default {
       feed: {
         id: 0,
         title: null,
+        type: null,
         url: null,
+        script: null,
         ngWord: null,
         action: null,
         emailSubject: null,
@@ -74,7 +87,9 @@ export default {
       if (x) {
         this.feed.id = x.id
         this.feed.title = x.title
+        this.feed.type = x.type
         this.feed.url = x.url
+        this.feed.script = x.script
         this.feed.ngWord = x.ngWord
         this.feed.action = x.action
         this.feed.emailSubject = x.emailSubject
@@ -83,7 +98,9 @@ export default {
       } else {
         this.feed.id = 0
         this.feed.title = null
+        this.feed.type = 'url'
         this.feed.url = null
+        this.feed.script = null
         this.feed.ngWord = null
         this.feed.action = 'email'
         this.feed.emailSubject = '{{FeedTitle}} {{EntryTitle}}'
