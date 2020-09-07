@@ -32,8 +32,8 @@ export const actions = {
         script: (x.type === 'script') ? x.script : null,
         ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
-        email_subject: (!x.action === 'email') ? x.emailSubject : null,
-        email_body: (!x.action === 'email') ? x.emailBody : null,
+        email_subject: (x.action === 'email') ? x.emailSubject : null,
+        email_body: (x.action === 'email') ? x.emailBody : null,
         webhook: (x.action === 'webhook') ? x.webhook : null
       })
     })
@@ -52,8 +52,8 @@ export const actions = {
         script: (x.type === 'script') ? x.script : null,
         ng_word: (!x.ngWord) ? null : x.ngWord,
         action: x.action,
-        email_subject: (!x.action === 'email') ? x.emailSubject : null,
-        email_body: (!x.action === 'email') ? x.emailBody : null,
+        email_subject: (x.action === 'email') ? x.emailSubject : null,
+        email_body: (x.action === 'email') ? x.emailBody : null,
         webhook: (x.action === 'webhook') ? x.webhook : null
       })
     })
