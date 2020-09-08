@@ -17,6 +17,7 @@
     "crypto-js": "^4.0.0",
     "date-fns-timezone": "^0.1.4",
     "feed-parser": "^1.0.19",
+    "iconv-lite": "^0.6.2",
     "linq": "^3.2.3",
     "mysql2": "^2.1.0",
     "node-cron": "^2.0.3",
