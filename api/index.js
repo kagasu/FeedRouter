@@ -41,60 +41,65 @@ cron.schedule('* * * * *', async () => {
 
   const feeds = await db.Feed.findAll()
   for (const feed of feeds) {
-    let items = []
-    switch (feed.type) {
-      case 'script':
-        items = await eval(feed.script)
-        break
-      case 'url':
-        items = (await parser.parseURL(feed.url)).items.reverse()
-        break
-    }
-
-    for (const item of items) {
-      if (Date.parse(item.isoDate) > feed.updatedAt) {
-        if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
-          continue
-        }
-
-        const urlHash = CryptoJS.SHA512(item.link).toString()
-
-        // 存在チェック
-        if (await db.ActionLog.findOne({ where: { feedId: feed.id, urlHash } })) {
-          continue
-        }
-
-        switch (feed.action) {
-          case 'email': {
-            await transporter.sendMail({
-              from: emailConfig.auth.user,
-              to: emailConfig.auth.user,
-              subject: (!feed.emailSubject) ? null : getReplacedText(feed, item, feed.emailSubject),
-              text: (!feed.emailBody) ? null : getReplacedText(feed, item, feed.emailBody)
-            })
-            break
-          }
-          case 'webhook': {
-            const webhook = JSON.parse(feed.webhook)
-            await fetch(webhook.url, {
-              method: webhook.method,
-              headers: { ...webhook.headers },
-              body: getReplacedText(feed, item, webhook.content)
-            })
-            break
-          }
-        }
-        feed.changed('updatedAt', true)
-
-        await db.ActionLog.create({
-          feedId: feed.id,
-          urlHash,
-          title: item.title.substring(0, 32),
-          url: item.link
-        })
+    try {
+      let items = []
+      switch (feed.type) {
+        case 'script':
+          items = await eval(feed.script)
+          break
+        case 'url':
+          items = (await parser.parseURL(feed.url)).items.reverse()
+          break
       }
+
+      for (const item of items) {
+        if (Date.parse(item.isoDate) > feed.updatedAt) {
+          if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
+            continue
+          }
+
+          const urlHash = CryptoJS.SHA512(item.link).toString()
+
+          // 存在チェック
+          if (await db.ActionLog.findOne({ where: { feedId: feed.id, urlHash } })) {
+            continue
+          }
+
+          switch (feed.action) {
+            case 'email': {
+              await transporter.sendMail({
+                from: emailConfig.auth.user,
+                to: emailConfig.auth.user,
+                subject: (!feed.emailSubject) ? null : getReplacedText(feed, item, feed.emailSubject),
+                text: (!feed.emailBody) ? null : getReplacedText(feed, item, feed.emailBody)
+              })
+              break
+            }
+            case 'webhook': {
+              const webhook = JSON.parse(feed.webhook)
+              await fetch(webhook.url, {
+                method: webhook.method,
+                headers: { ...webhook.headers },
+                body: getReplacedText(feed, item, webhook.content)
+              })
+              break
+            }
+          }
+          feed.changed('updatedAt', true)
+
+          await db.ActionLog.create({
+            feedId: feed.id,
+            urlHash,
+            title: item.title.substring(0, 32),
+            url: item.link
+          })
+        }
+      }
+      await feed.save()
+    } catch (e) {
+      console.log(`FeedId: ${feed.id}`)
+      console.log(e)
     }
-    await feed.save()
   }
 })
 
