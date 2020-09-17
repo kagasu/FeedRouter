@@ -34,6 +34,16 @@ pm2 startup
 pm2 save
 ```
 
+# Check logs
+```
+pm2 logs
+```
+
+# Uninstall
+```
+pm2 delete FeedRouter
+```
+
 # FAQ
 ### Q. I can't login to Gmail.
 A. Access below URLs.
