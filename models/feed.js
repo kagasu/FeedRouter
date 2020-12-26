@@ -49,12 +49,20 @@ module.exports = (sequelize, DataTypes) => {
       field: 'webhook',
       type: DataTypes.STRING
     },
+    checkIntervalMinutes: {
+      field: 'check_interval_minutes',
+      type: DataTypes.INTEGER
+    },
     createdAt: {
       field: 'created_at',
       type: DataTypes.DATE
     },
     updatedAt: {
       field: 'updated_at',
+      type: DataTypes.DATE
+    },
+    checkedAt: {
+      field: 'checked_at',
       type: DataTypes.DATE
     }
   }, {

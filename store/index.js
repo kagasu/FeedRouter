@@ -34,7 +34,8 @@ export const actions = {
         action: x.action,
         email_subject: (x.action === 'email') ? x.emailSubject : null,
         email_body: (x.action === 'email') ? x.emailBody : null,
-        webhook: (x.action === 'webhook') ? x.webhook : null
+        webhook: (x.action === 'webhook') ? x.webhook : null,
+        checkIntervalMinutes: x.checkIntervalMinutes
       })
     })
 
@@ -54,7 +55,8 @@ export const actions = {
         action: x.action,
         email_subject: (x.action === 'email') ? x.emailSubject : null,
         email_body: (x.action === 'email') ? x.emailBody : null,
-        webhook: (x.action === 'webhook') ? x.webhook : null
+        webhook: (x.action === 'webhook') ? x.webhook : null,
+        checkIntervalMinutes: x.checkIntervalMinutes
       })
     })
 

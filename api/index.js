@@ -42,6 +42,11 @@ cron.schedule('* * * * *', async () => {
   const feeds = await db.Feed.findAll()
   for (const feed of feeds) {
     try {
+      // インターバルを考慮する
+      if (Date.now() <= feed.checkedAt.setMinutes(feed.checkedAt.getMinutes() + feed.checkIntervalMinutes)) {
+        continue
+      }
+
       let items = []
       switch (feed.type) {
         case 'script':
@@ -95,6 +100,8 @@ cron.schedule('* * * * *', async () => {
           })
         }
       }
+
+      feed.changed('checkedAt', true)
       await feed.save()
     } catch (e) {
       console.log(`FeedId: ${feed.id}`)
@@ -132,7 +139,8 @@ app.post('/api/feed', async (req, res, next) => {
       action: req.body.action,
       emailSubject: req.body.email_subject,
       emailBody: req.body.email_body,
-      webhook: req.body.webhook
+      webhook: req.body.webhook,
+      checkIntervalMinutes: req.body.check_interval_minutes
     })
   } catch (e) {
     res.send(e.original.sqlMessage)
@@ -153,7 +161,8 @@ app.put('/api/feed', async (req, res, next) => {
       action: req.body.action,
       emailSubject: req.body.email_subject,
       emailBody: req.body.email_body,
-      webhook: req.body.webhook
+      webhook: req.body.webhook,
+      checkIntervalMinutes: req.body.check_interval_minutes
     }, {
       where: {
         id: req.body.id

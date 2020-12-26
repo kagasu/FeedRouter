@@ -38,6 +38,10 @@
           <b-form-textarea id="feedWebhook" v-model="feed.webhook" rows="3" max-rows="10" />
         </b-form-group>
       </div>
+
+      <b-form-group label="Check Interval Minutes" label-for="feedCheckIntervalMinutes">
+        <b-form-input id="feedCheckIntervalMinutes" v-model="feed.checkIntervalMinutes" type="number" required />
+      </b-form-group>
     </b-modal>
 
     <b-table striped hover :items="feeds" :fields="fields">
@@ -65,7 +69,8 @@ export default {
         action: null,
         emailSubject: null,
         emailBody: null,
-        webhook: null
+        webhook: null,
+        checkIntervalMinutes: 0
       },
       fields: [
         { key: 'id', sortable: true, sortDirection: 'desc' },
@@ -95,6 +100,7 @@ export default {
         this.feed.emailSubject = x.emailSubject
         this.feed.emailBody = x.emailBody
         this.feed.webhook = x.webhook
+        this.feed.checkIntervalMinutes = x.checkIntervalMinutes
       } else {
         this.feed.id = 0
         this.feed.title = null
@@ -106,6 +112,7 @@ export default {
         this.feed.emailSubject = '{{FeedTitle}} {{EntryTitle}}'
         this.feed.emailBody = '{{EntryUrl}}'
         this.feed.webhook = '{\n  "url": "http://127.0.0.1/webhook",\n  "method": "post",\n  "headers": {\n    "Content-Type": "application/json"\n  },\n  "content": "{\\"content\\":\\"{{FeedTitle}}\\\\n{{EntryUrl}}\\"}"\n}'
+        this.feed.checkIntervalMinutes = 0
       }
     },
     showModal (x, button) {

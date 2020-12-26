@@ -54,6 +54,11 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
+      checkIntervalMinutes: {
+        field: 'check_interval_minutes',
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         field: 'created_at',
         type: Sequelize.DATE,
@@ -63,6 +68,12 @@ module.exports = {
         field: 'updated_at',
         type: Sequelize.DATE,
         allowNull: false
+      },
+      checkedAt: {
+        field: 'checked_at',
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now')
       }
     })
   },
