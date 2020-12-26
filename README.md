@@ -3,7 +3,7 @@
 ![](https://github.com/kagasu/FeedRouter/raw/master/resources/image002.png)
 
 # Features
-- Check feed every 1 minutes.
+- Check feed every 1 minutes.<br>Can configure interval.
 - Notify new entry(Email or Webhook)
 - You can write custom feed in Node.js<br>
 https://github.com/kagasu/FeedRouter/tree/master/examples/script
