@@ -13,6 +13,7 @@ https://github.com/kagasu/FeedRouter/tree/master/examples/script
 git clone https://github.com/kagasu/FeedRouter
 cd FeedRouter
 npm i
+npm i -g sequelize-cli
 vim config/config.json
 vim config/emailConfig.json
 
