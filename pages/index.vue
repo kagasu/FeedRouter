@@ -3,5 +3,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  asyncData ({ redirect }) {
+    return redirect(301, '/feeds')
+  }
+}
 </script>
