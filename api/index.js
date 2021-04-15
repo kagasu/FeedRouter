@@ -58,7 +58,8 @@ cron.schedule('* * * * *', async () => {
       }
 
       for (const item of items) {
-        if (Date.parse(item.isoDate) > feed.updatedAt) {
+        // 初回実行時に全て通知されてしまうのでfeed作成日で制限する
+        if (new Date(item.isoDate) > feed.createdAt) {
           if (feed.ngWord && hasNgWord(item.title, item.content, feed.ngWord.split(' '))) {
             continue
           }
@@ -90,7 +91,6 @@ cron.schedule('* * * * *', async () => {
               break
             }
           }
-          feed.changed('updatedAt', true)
 
           await db.ActionLog.create({
             feedId: feed.id,
