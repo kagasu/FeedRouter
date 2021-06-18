@@ -28,6 +28,7 @@ function getReplacedText (feed, item, str) {
     .replace('{{FeedTitle}}', feed.title)
     .replace('{{EntryTitle}}', item.title)
     .replace('{{EntryUrl}}', item.link)
+    .replace('{{EntryContent}}', item.content)
 }
 
 cron.schedule('* * * * *', async () => {
